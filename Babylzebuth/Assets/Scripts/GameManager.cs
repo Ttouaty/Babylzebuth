@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	[SerializeField]
+	private GameObject baby;
+	[SerializeField]
 	private GameObject bonus;
 	[SerializeField]
 	private List<GameObject> traps = new List<GameObject>();
@@ -20,7 +22,10 @@ public class GameManager : MonoBehaviour
 	
 	void Update ()
 	{
-
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9	)), Quaternion.identity);
+		}
 	}
 
 	IEnumerator BonusCoroutine()
