@@ -1,2 +1,4 @@
 Babylzebuth/Library/
 Babylzebuth/Temp/
+*.sln
+*.csproj
