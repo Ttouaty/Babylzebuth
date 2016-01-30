@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance;
 
 	[SerializeField]
+	private AudioSource mySounds;
+
+	[SerializeField]
+	private AudioClip[] SpikesSound;
+
+	[SerializeField]
 	private GameObject baby;
 	[SerializeField]
 	private GameObject bonus;
@@ -33,6 +39,8 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
+		mySounds = GetComponent<AudioSource>();
+
 		timer = 0;
 		scoreP1 = 0;
 		scoreP2 = 0;
