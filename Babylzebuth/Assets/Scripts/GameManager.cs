@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
+		Instance = this;
 		mySounds = GetComponent<AudioSource>();
 
 		timer = 0;
@@ -127,18 +128,20 @@ public class GameManager : MonoBehaviour
 			for (int i = 0; i < traps.Count; i++)
 			{
 				traps[i].transform.position = new Vector3(traps[i].transform.position.x, traps[i].transform.position.y + 0.5f, traps[i].transform.position.z);
+				traps[i].GetComponent<Collider>().enabled = false;
 				traps[i].canStun = true;
 			}
 
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(3);
 
 			for (int i = 0; i < traps.Count; i++)
 			{
 				traps[i].transform.position = new Vector3(traps[i].transform.position.x, traps[i].transform.position.y - 0.5f, traps[i].transform.position.z);
+				traps[i].GetComponent<Collider>().enabled = true;
 				traps[i].canStun = false;
 			}
 
-			yield return new WaitForSeconds(3);
+			yield return new WaitForSeconds(1);
 		}
 	}
 }
