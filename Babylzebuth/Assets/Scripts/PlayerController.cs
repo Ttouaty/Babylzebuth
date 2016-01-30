@@ -118,16 +118,11 @@ public class PlayerController : MonoBehaviour
 
 	private void ProcessOrientation()
 	{
-		//this._orientation.x = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.5f ? Input.GetAxis("Horizontal") : this._orientation.x;
-		//this._orientation.z = Mathf.Abs(Input.GetAxis("Vertical")) > 0.5f ? Input.GetAxis("Vertical") : this._orientation.z;
 
-		// A REFAIRE AC LES SPRITES
-		//if(this._activeSpeed.magnitude > 0.5f)
-		//	this.transform.rotation = Quaternion.LookRotation(this._activeSpeed.normalized);
 		if (Mathf.Sign(-this._orientation.x) != 0)
 			this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(-this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
 
-		this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName), 0, Input.GetAxis(this._vertical2AxisName)));
+		this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName) * Mathf.Sign(this.transform.localScale.x), 0, Input.GetAxis(this._vertical2AxisName)));
 	}
 
 	private void ShowAimingLine(Vector3 direction)
@@ -243,7 +238,7 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			mySounds.PlayOneShot(throwWeaponSound);
-			this._projectileLaunched  = this._weapon.Launch(this._transf.position, this._aimingLine.forward, this.tag);
+			this._projectileLaunched = this._weapon.Launch(this._transf.position, new Vector3(this._aimingLine.forward.x * Mathf.Sign(this.transform.localScale.x), this._aimingLine.forward.y, this._aimingLine.forward.z), this.tag);
 		}
 	}
 	
