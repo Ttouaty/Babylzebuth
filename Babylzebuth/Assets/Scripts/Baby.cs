@@ -3,6 +3,12 @@ using System.Collections;
 
 public class Baby : MonoBehaviour
 {
+	[SerializeField]
+	private AudioSource mySounds;
+
+	[SerializeField]
+	private AudioClip babySound;
+
 	private Rigidbody myRigidbody;
 	private Transform myTransform;
 	public bool isCatchable = true;
@@ -26,6 +32,7 @@ public class Baby : MonoBehaviour
 	{
 		myRigidbody = GetComponent<Rigidbody>();
 		myTransform = GetComponent<Transform>();
+		mySounds = GetComponent<AudioSource>();
 		targetPos = this.transform.position;
 	}
 	
@@ -75,11 +82,11 @@ public class Baby : MonoBehaviour
 		this.gameObject.layer = LayerMask.NameToLayer("Default");
 		yield return new WaitForSeconds(1.5f);
 		this.isOnFloor = true;
-
 	}
 
 	public void Kill()
 	{
+		mySounds.PlayOneShot(babySound);
 		myTransform.parent = null;
 		Destroy(this.gameObject);
 	}

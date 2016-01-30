@@ -57,6 +57,12 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+	[SerializeField]
+	private AudioSource mySounds;
+
+	[SerializeField]
+	private AudioClip throwWeaponSound;
+
     //States
 	private bool _allowInput = true;
 	private bool _isStunned = false;
@@ -69,6 +75,8 @@ public class PlayerController : MonoBehaviour
     #region Unity virtuals
     void Start()
     {
+		mySounds = GetComponent<AudioSource>();
+
 		this._horizontalAxisName = this._playerName + "_Horizontal";
 		this._verticalAxisName = this._playerName + "_Vertical";
 		this._attackInputName = this._playerName + "_Attack";
@@ -237,6 +245,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
+			mySounds.PlayOneShot(throwWeaponSound);
 			this._projectileLaunched  = this._weapon.Launch(this._transf.position, this._aimingLine.forward, this.tag);
 		}
 	}

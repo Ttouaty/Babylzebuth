@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour
 	private AudioSource mySounds;
 	[SerializeField]
 	private AudioClip buttonSound;
+	[SerializeField]
+	private AudioClip[] themeSound;
 
 	public Canvas myCanvas;
 	public Transform myEventSys;
@@ -58,6 +60,8 @@ public class MenuManager : MonoBehaviour
 	void Start ()
 	{
 		mySounds = GetComponent<AudioSource>();
+		mySounds.loop = true;
+		mySounds.PlayOneShot(themeSound[0]);
 	}
 
 	public void Clock(string _timerToShow)
@@ -84,10 +88,11 @@ public class MenuManager : MonoBehaviour
 
 	public void ToPlayState()
 	{
-		Debug.Log(buttonSound);
 		mySounds.PlayOneShot(buttonSound);
 		ChangeState(GameState.Play);
 		Application.LoadLevel("FirstStage");
+		mySounds.loop = true;
+		mySounds.PlayOneShot(themeSound[1], 0.5f);
 	}
 
 	public void ToMenuState()

@@ -3,6 +3,14 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
+	[SerializeField]
+	private AudioSource mySounds;
+
+	[SerializeField]
+	private AudioClip hitWallSound;
+	[SerializeField]
+	private AudioClip hitSound;
+
 	private bool _isLaunchable = true;
 	private bool _isReturning = false;
 	private bool _isRetrievable = false;
@@ -17,6 +25,7 @@ public class Weapon : MonoBehaviour {
 
 	void Start()
 	{
+		mySounds = GetComponent<AudioSource>();
 		this._rigidB = GetComponent<Rigidbody>();
 		this.GetComponent<MeshRenderer>().enabled = false;
 	}
@@ -87,8 +96,14 @@ public class Weapon : MonoBehaviour {
 		{
 			if (colli.GetComponent<PlayerController>() != null)
 			{
+				mySounds.PlayOneShot(hitSound);
 				colli.GetComponent<PlayerController>().Damage(1, this._direction.normalized * 20);
 			}
+			else
+			{
+				mySounds.PlayOneShot(hitWallSound);
+			}
+
 			this.Stop();
 		}
 	}
