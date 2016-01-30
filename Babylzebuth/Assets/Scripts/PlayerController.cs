@@ -5,6 +5,10 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     #region Movement Variables
+	[Header("Player")]
+	[SerializeField]
+	private string _playerName = "";
+
     [Space(10, order = 1)]
     [Header("Movement", order = 2)]
 
@@ -20,6 +24,11 @@ public class PlayerController : MonoBehaviour
 
 	private Vector3 _activeSpeed = new Vector3(0f, 0f, 0f);
 	private Vector3 _orientation = new Vector3(0f, 0f, 0f);
+
+	//Inputs
+	private string _horizontalAxisName;
+	private string _verticalAxisName;
+	private string _attackInputName;
 
     //Max speeds
 	[Header("Movement")]
@@ -37,6 +46,7 @@ public class PlayerController : MonoBehaviour
 	private float _invulTime = 0f; //Secondes of invulnerability
 	private float _stunTime = 0f; //Secondes of stun on Hit
 
+	private bool _projectileLaunched = false;
     #endregion
 
     //States
@@ -47,6 +57,9 @@ public class PlayerController : MonoBehaviour
     #region Unity virtuals
     void Start()
     {
+		this._horizontalAxisName = this._playerName +"_Horizontal";
+		this._verticalAxisName = this._playerName + "_Vertical";
+		this._attackInputName = this._playerName + "_Attack";
 		Application.targetFrameRate = 60; //Caps the game at 60 fps (optionnal but recommended for precise jump)
 		this._rigidB = this.GetComponent<Rigidbody>();
         this._transf = this.GetComponent<Transform>();
@@ -57,7 +70,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void Update()
+
+	/*
+	 ########################################################
+	 ###########           UPDATE            ################
+	 ########################################################
+	 */
+	void Update()
     {
         if (this._allowInput)
             this.ProcessInputs();
@@ -72,9 +91,12 @@ public class PlayerController : MonoBehaviour
 
 	private void ProcessOrientation()
 	{
-		this._orientation.x = Input.GetAxis("Horizontal");
-		this._orientation.z = Input.GetAxis("Vertical");
-		this.transform.rotation = Quaternion.LookRotation(this._orientation.normalized);
+		//this._orientation.x = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.5f ? Input.GetAxis("Horizontal") : this._orientation.x;
+		//this._orientation.z = Mathf.Abs(Input.GetAxis("Vertical")) > 0.5f ? Input.GetAxis("Vertical") : this._orientation.z;
+
+		// A REFAIRE AC LES SPRITES
+		if(this._activeSpeed.magnitude > 0.5f)
+			this.transform.rotation = Quaternion.LookRotation(this._activeSpeed.normalized);
 	}
 
     #endregion
@@ -101,24 +123,22 @@ public class PlayerController : MonoBehaviour
     void ProcessInputs()
     {
         //Get the input raw
-		if (this._inputRawX != Mathf.Sign(Input.GetAxisRaw("Horizontal")) && Input.GetAxisRaw("Horizontal") != 0f)
-		{
-			print("ass x");
+		if (this._inputRawX != Mathf.Sign(Input.GetAxisRaw(this._horizontalAxisName)) && Input.GetAxisRaw(this._horizontalAxisName) != 0f)
 			this._activeSpeed.x = 0;
-		}
-		if (this._inputRawZ != Mathf.Sign(Input.GetAxisRaw("Vertical")) && Input.GetAxisRaw("Vertical") != 0f)
-		{
-			print("ass y");
+		if (this._inputRawZ != Mathf.Sign(Input.GetAxisRaw(this._verticalAxisName)) && Input.GetAxisRaw(this._verticalAxisName) != 0f)
 			this._activeSpeed.z = 0;
+
+
+		this._inputRawX = this._allowInput ? Input.GetAxisRaw(this._horizontalAxisName) : 0;
+		this._inputRawZ = this._allowInput ? Input.GetAxisRaw(this._verticalAxisName) : 0;
+
+		this._inputX = this._allowInput ? Input.GetAxis(this._horizontalAxisName) : 0;
+		this._inputZ = this._allowInput ? Input.GetAxis(this._verticalAxisName) : 0;
+
+		if (Input.GetButtonDown(this._attackInputName))
+		{
+			this.ProcessAction();
 		}
-
-
-		this._inputRawX = this._allowInput ? Input.GetAxisRaw("Horizontal") : 0;
-		this._inputRawZ = this._allowInput ? Input.GetAxisRaw("Vertical") : 0;
-
-		this._inputX = this._allowInput ? Input.GetAxis("Horizontal") : 0;
-		this._inputZ = this._allowInput ? Input.GetAxis("Vertical") : 0;
-
     }
 
 
@@ -172,8 +192,20 @@ public class PlayerController : MonoBehaviour
     	this._invulTime += amount;
     }
 
-	
-	
+
+	private void ProcessAction() 
+	{
+		if (this._projectileLaunched)
+		{
+			Debug.Log("retrieve Weapon");
+			this._projectileLaunched = false;
+		}
+		else
+		{
+			Debug.Log("launch weapon");
+			this._projectileLaunched = true;
+		}
+	}
 	
     
     #region Attacks
