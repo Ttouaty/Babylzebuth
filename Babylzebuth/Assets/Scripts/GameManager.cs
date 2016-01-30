@@ -61,9 +61,9 @@ public class GameManager : MonoBehaviour
 		if (Time.timeScale != 1)
 			Time.timeScale = 1;
 
-		//StartCoroutine("BabiesCoroutine");
-		//StartCoroutine("BonusCoroutine");
-		//StartCoroutine("SpikesCoroutine");
+		StartCoroutine("BabiesCoroutine");
+		StartCoroutine("BonusCoroutine");
+		StartCoroutine("SpikesCoroutine");
 		StartCoroutine("ArrowsCoroutine");
 	}
 	
