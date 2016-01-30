@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private int babiesTimeRate = 5;
 
+	[SerializeField]
+	private Bonus[] BonusList;
+	[SerializeField]
+	private Transform BonusAltar;
 	public bool BonusSpawned = false;
 
 	void Start ()
@@ -112,18 +116,18 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator BabiesCoroutine()
 	{
-		if (!this.BonusSpawned)
-		{ 
-			Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9)), Quaternion.identity);
-			this.BonusSpawned = true;
-		}
+		Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9)), Quaternion.identity);
 		yield return new WaitForSeconds(babiesTimeRate);
 		StartCoroutine("BabiesCoroutine");
 	}
 
 	IEnumerator BonusCoroutine()
 	{
-		Instantiate(bonus, new Vector3(Random.Range(-9, 0), 0.5f, Random.Range(-9, 0)), Quaternion.identity);
+		if (!this.BonusSpawned)
+		{
+			Instantiate(BonusList[Random.Range((int)0, (int)BonusList.Length)], BonusAltar.position, Quaternion.identity);
+			this.BonusSpawned = true;
+		}
 		yield return new WaitForSeconds(8);
 		StartCoroutine("BonusCoroutine");
 	}
