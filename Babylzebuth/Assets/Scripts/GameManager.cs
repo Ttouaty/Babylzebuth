@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private int babiesTimeRate = 5;
 
+	public bool BonusSpawned = false;
+
 	void Start ()
 	{
 		Instance = this;
@@ -103,7 +105,11 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator BabiesCoroutine()
 	{
-		Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9)), Quaternion.identity);
+		if (!this.BonusSpawned)
+		{ 
+			Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9)), Quaternion.identity);
+			this.BonusSpawned = true;
+		}
 		yield return new WaitForSeconds(babiesTimeRate);
 		StartCoroutine("BabiesCoroutine");
 	}
