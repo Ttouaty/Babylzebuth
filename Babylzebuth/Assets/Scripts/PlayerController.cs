@@ -118,8 +118,9 @@ public class PlayerController : MonoBehaviour
 		//this._orientation.z = Mathf.Abs(Input.GetAxis("Vertical")) > 0.5f ? Input.GetAxis("Vertical") : this._orientation.z;
 
 		// A REFAIRE AC LES SPRITES
-		if(this._activeSpeed.magnitude > 0.5f)
-			this.transform.rotation = Quaternion.LookRotation(this._activeSpeed.normalized);
+		//if(this._activeSpeed.magnitude > 0.5f)
+		//	this.transform.rotation = Quaternion.LookRotation(this._activeSpeed.normalized);
+		this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(-this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
 
 		this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName), 0, Input.GetAxis(this._vertical2AxisName)));
 	}
@@ -289,13 +290,8 @@ public class PlayerController : MonoBehaviour
 				baby = other.gameObject;
 			}
 		}
-
-		if(other.gameObject.tag == "Altar" && baby != null)
-		{
-			other.gameObject.GetComponent<Baby>().Kill();
-			GameManager.Instance.AddScore(this._playerName);
-		}
 	}
+
 
 	void OnTriggerEnter(Collider other)
 	{
@@ -305,6 +301,11 @@ public class PlayerController : MonoBehaviour
 			{
 				Damage(1, -_orientation.normalized * 15);
 			}
+		}
+		else if (other.gameObject.tag == "Altar" && baby != null)
+		{
+			baby.GetComponent<Baby>().Kill();
+			GameManager.Instance.AddScore(this._playerName);
 		}
 	}
 
