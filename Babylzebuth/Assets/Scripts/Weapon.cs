@@ -46,7 +46,7 @@ public class Weapon : MonoBehaviour {
 		this._targetTag = targetTag;
 		this._direction = dir.normalized;
 		this._isLaunchable = false;
-		StartCoroutine("LaunchCoroutine");
+		this._rigidB.velocity = this._direction.normalized * speed;
 		return true;
 	}
 
@@ -56,22 +56,8 @@ public class Weapon : MonoBehaviour {
 			return;
 		this._rigidB.velocity = Vector3.zero;
 		this._isRetrievable = true;
-		this._rigidB.useGravity = false;
 		this.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
 		StopAllCoroutines();
-	}
-
-	private IEnumerator LaunchCoroutine()
-	{
-		this._rigidB.velocity = this._direction.normalized * speed;
-		float elapsedTime = 0;
-
-		while (elapsedTime < 2)
-		{
-			elapsedTime += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
-		}
-		this._rigidB.useGravity = true;
 	}
 
 	private IEnumerator RetrieveCoroutine()

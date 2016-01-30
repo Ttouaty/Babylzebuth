@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
 	private string _verticalAxisName;
 	private string _attackInputName;
 
+	private string _horizontal2AxisName;
+	private string _vertical2AxisName;
+
     //Max speeds
 	[Header("Movement")]
 	[SerializeField]
@@ -60,13 +63,18 @@ public class PlayerController : MonoBehaviour
 	private RaycastHit _hit;
 
 	private GameObject baby;
+	[SerializeField]
+	private Transform _aimingLine;
 
     #region Unity virtuals
     void Start()
     {
-		this._horizontalAxisName = this._playerName +"_Horizontal";
+		this._horizontalAxisName = this._playerName + "_Horizontal";
 		this._verticalAxisName = this._playerName + "_Vertical";
 		this._attackInputName = this._playerName + "_Attack";
+
+		this._horizontal2AxisName = this._playerName + "_Horizontal 2";
+		this._vertical2AxisName = this._playerName + "_Vertical 2";
 
 		Application.targetFrameRate = 60; //Caps the game at 60 fps (optionnal but recommended for precise jump)
 
@@ -97,11 +105,11 @@ public class PlayerController : MonoBehaviour
 
 		this.ApplyCharacterFinalVelocity();
 
-		if (baby != null && Input.GetKeyDown(KeyCode.P))
-		{
-			baby.GetComponent<Baby>().Ejection(Vector3.forward);
-			baby = null;
-		}
+		//if (baby != null && Input.GetKeyDown(KeyCode.P))
+		//{
+		//	baby.GetComponent<Baby>().Ejection(Vector3.forward);
+		//	baby = null;
+		//}
     }
 
 	private void ProcessOrientation()
@@ -112,8 +120,18 @@ public class PlayerController : MonoBehaviour
 		// A REFAIRE AC LES SPRITES
 		if(this._activeSpeed.magnitude > 0.5f)
 			this.transform.rotation = Quaternion.LookRotation(this._activeSpeed.normalized);
+
+		this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName), 0, Input.GetAxis(this._vertical2AxisName)));
 	}
 
+	private void ShowAimingLine(Vector3 direction)
+	{
+		this._aimingLine.forward = this.transform.forward;
+		if (direction.magnitude > 0.2f)
+			this._aimingLine.rotation = Quaternion.Euler(new Vector3(0, Vector3.Angle(Vector3.right, direction) * Mathf.Sign(direction.z) - this.transform.rotation.y + 90, 0));
+		else
+			this._aimingLine.forward = this._transf.forward;
+	}
     #endregion
     
     
@@ -152,6 +170,7 @@ public class PlayerController : MonoBehaviour
 
 		this._orientation.x = Input.GetAxis(this._horizontalAxisName);
 		this._orientation.z = Input.GetAxis(this._verticalAxisName);
+
 
 		if (Input.GetButtonDown(this._attackInputName))
 		{
@@ -217,10 +236,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			Vector3 direction = new Vector3(Input.GetAxis(this._horizontalAxisName), 0, Input.GetAxis(this._verticalAxisName));
-			if (direction.magnitude == 0)
-				direction = this._transf.forward;
-			this._projectileLaunched  = this._weapon.Launch(this._transf.position, direction, this.tag);
+			this._projectileLaunched  = this._weapon.Launch(this._transf.position, this._aimingLine.forward, this.tag);
 		}
 	}
 	
@@ -236,7 +252,20 @@ public class PlayerController : MonoBehaviour
 		this._activeSpeed = ejection;
 		this._inputRawX = 0;
 		this._inputRawZ = 0;
+
+		this.EjectBaby(new Vector3(UnityEngine.Random.Range(-1, 1), 0.9f, UnityEngine.Random.Range(-1, 1)).normalized * 10);
 	}
+
+	private void EjectBaby(Vector3 direction)
+	{
+		if (this.baby != null)
+		{
+			this.baby.GetComponent<Baby>().Ejection(this.transform.position, direction);
+			this.baby = null;
+		}
+	}
+
+
 
 	private void addStun(float amount)
 	{
@@ -254,8 +283,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Babies" && baby == null)
 		{
-			other.gameObject.GetComponent<Baby>().Catch(this.transform);
-			baby = other.gameObject;
+			if (other.gameObject.GetComponent<Baby>().isCatchable) 
+			{
+				other.gameObject.GetComponent<Baby>().Catch(this.transform);
+				baby = other.gameObject;
+			}
 		}
 
 		if(other.gameObject.tag == "Altar" && baby != null)
