@@ -81,7 +81,6 @@ public class MenuManager : MonoBehaviour
 	{
 		ChangeState(GameState.Play);
 		Application.LoadLevel("FirstStage");
-		GameManager.Instance.initGame();
 	}
 
 	public void ToMenuState()

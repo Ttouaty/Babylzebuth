@@ -31,25 +31,20 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private int babiesTimeRate = 5;
 
-	public bool imTheOriginal = false;
-
-	void Awake()
-	{
-		if (Instance)
-		{
-			if (!imTheOriginal)
-				Destroy(gameObject);
-		}
-		else
-		{
-			Instance = this;
-			DontDestroyOnLoad(gameObject);
-			imTheOriginal = true;
-		}
-	}
-
 	void Start ()
 	{
+		timer = 0;
+		scoreP1 = 0;
+		scoreP2 = 0;
+		scoreP3 = 0;
+		scoreP4 = 0;
+		babiesTimeRate = 5;
+		gameIsOver = false;
+		MenuManager.Instance.ScoreInGame(scoreP1, scoreP2);
+
+		if (Time.timeScale != 1)
+			Time.timeScale = 1;
+
 		StartCoroutine("BabiesCoroutine");
 		StartCoroutine("BonusCoroutine");
 		StartCoroutine("TrapsCoroutine");
@@ -60,17 +55,12 @@ public class GameManager : MonoBehaviour
 		timer += Time.deltaTime;
 		MenuManager.Instance.Clock(string.Format("{0:0}:{1:00}.{2:0}", Mathf.Floor(timer / 60), Mathf.Floor(timer) % 60, Mathf.Floor((timer * 10) % 10)));
 
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9)), Quaternion.identity);
-		}
-
 		if (Input.GetKeyDown(KeyCode.B))
 		{
 			babiesTimeRate -= 1;
 		}
 
-		if(timer >= 10 && !gameIsOver)
+		if (timer >= 60 && !gameIsOver)
 		{
 			gameIsOver = true;
 			timer = 60;
@@ -82,17 +72,7 @@ public class GameManager : MonoBehaviour
 
 	public void initGame()
 	{
-		timer = 0;
-		scoreP1 = 0;
-		scoreP2 = 0;
-		scoreP3 = 0;
-		scoreP4 = 0;
-		babiesTimeRate = 5;
-		gameIsOver = false;
-		MenuManager.Instance.ScoreInGame(scoreP1, scoreP2);
-
-		if(Time.timeScale != 1)
-			Time.timeScale = 1;
+		
 	}
 
 	public void AddScore(string _playerName)
