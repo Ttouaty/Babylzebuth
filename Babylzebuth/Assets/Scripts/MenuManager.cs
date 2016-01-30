@@ -60,7 +60,6 @@ public class MenuManager : MonoBehaviour
 	void Start ()
 	{
 		mySounds = GetComponent<AudioSource>();
-		mySounds.loop = true;
 		mySounds.PlayOneShot(themeSound[0]);
 	}
 

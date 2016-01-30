@@ -11,13 +11,24 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField]
 	private AudioClip SpikesSound;
+	[SerializeField]
+	private AudioClip ArrowsSound;
 
 	[SerializeField]
 	private GameObject baby;
 	[SerializeField]
 	private GameObject bonus;
 	[SerializeField]
-	private List<Trap> traps = new List<Trap>();
+	private List<Trap> spikes = new List<Trap>();
+	[SerializeField]
+	private GameObject arrowsR;
+	[SerializeField]
+	private GameObject arrowsL;
+	[SerializeField]
+	private Transform spawnArrowR;
+	[SerializeField]
+	private Transform spawnArrowL;
+	
 
 
 	private bool gameIsOver = false;
@@ -48,9 +59,10 @@ public class GameManager : MonoBehaviour
 		if (Time.timeScale != 1)
 			Time.timeScale = 1;
 
-		StartCoroutine("BabiesCoroutine");
-		StartCoroutine("BonusCoroutine");
-		StartCoroutine("TrapsCoroutine");
+		//StartCoroutine("BabiesCoroutine");
+		//StartCoroutine("BonusCoroutine");
+		//StartCoroutine("SpikesCoroutine");
+		StartCoroutine("ArrowsCoroutine");
 	}
 	
 	void Update ()
@@ -71,11 +83,6 @@ public class GameManager : MonoBehaviour
 			MenuManager.Instance.ChangeState(MenuManager.GameState.Score);
 			MenuManager.Instance.Podium(scoreP1, scoreP2);
 		}
-	}
-
-	public void initGame()
-	{
-		
 	}
 
 	public void AddScore(string _playerName)
@@ -115,31 +122,50 @@ public class GameManager : MonoBehaviour
 		StartCoroutine("BonusCoroutine");
 	}
 
-	IEnumerator TrapsCoroutine()
+	IEnumerator SpikesCoroutine()
 	{
 		while(true)
 		{
 			yield return new WaitForSeconds(1);
 
-			for (int i = 0; i < traps.Count; i++)
+			for (int i = 0; i < spikes.Count; i++)
 			{
 				mySounds.PlayOneShot(SpikesSound);
-				traps[i].transform.position = new Vector3(traps[i].transform.position.x, traps[i].transform.position.y + 0.5f, traps[i].transform.position.z);
-				traps[i].GetComponent<Collider>().enabled = false;
-				traps[i].canStun = true;
+				spikes[i].transform.position = new Vector3(spikes[i].transform.position.x, spikes[i].transform.position.y + 0.5f, spikes[i].transform.position.z);
+				spikes[i].GetComponent<Collider>().enabled = false;
+				spikes[i].canStun = true;
 			}
 
 			yield return new WaitForSeconds(3);
 
-			for (int i = 0; i < traps.Count; i++)
+			for (int i = 0; i < spikes.Count; i++)
 			{
 				mySounds.PlayOneShot(SpikesSound);
-				traps[i].transform.position = new Vector3(traps[i].transform.position.x, traps[i].transform.position.y - 0.5f, traps[i].transform.position.z);
-				traps[i].GetComponent<Collider>().enabled = true;
-				traps[i].canStun = false;
+				spikes[i].transform.position = new Vector3(spikes[i].transform.position.x, spikes[i].transform.position.y - 0.5f, spikes[i].transform.position.z);
+				spikes[i].GetComponent<Collider>().enabled = true;
+				spikes[i].canStun = false;
 			}
 
 			yield return new WaitForSeconds(2);
+		}
+	}
+
+	IEnumerator ArrowsCoroutine()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(Random.Range(1, 3));
+
+			mySounds.PlayOneShot(ArrowsSound);
+			Instantiate(arrowsR, spawnArrowR.position, spawnArrowR.rotation);
+			arrowsR.transform.position = new Vector3(arrowsR.transform.position.x, arrowsR.transform.position.y, arrowsR.transform.position.z);
+
+			yield return new WaitForSeconds(Random.Range(2, 5));
+
+			mySounds.PlayOneShot(ArrowsSound);
+			Instantiate(arrowsL, spawnArrowL.position, spawnArrowL.rotation);
+
+			yield return new WaitForSeconds(Random.Range(3, 7));
 		}
 	}
 }
