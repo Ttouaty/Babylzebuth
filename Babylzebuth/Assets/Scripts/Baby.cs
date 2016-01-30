@@ -24,6 +24,7 @@ public class Baby : MonoBehaviour
 
 	[SerializeField]
 	private Vector3 targetPos;
+	public Vector3 originalTargetPos;
 
 	[SerializeField]
 	private float speed;
@@ -34,6 +35,7 @@ public class Baby : MonoBehaviour
 		myTransform = GetComponent<Transform>();
 		mySounds = GetComponent<AudioSource>();
 		targetPos = this.transform.position;
+		this.originalTargetPos = this.targetPos;
 	}
 	
 	void Update ()
@@ -89,6 +91,12 @@ public class Baby : MonoBehaviour
 		mySounds.PlayOneShot(babySound);
 		myTransform.parent = null;
 		Destroy(this.gameObject);
+		StopAllCoroutines();
+	}
+
+	public void FocusTarget(Vector3 target)
+	{
+		targetPos = target;
 	}
 
 	IEnumerator WalkCoroutine()

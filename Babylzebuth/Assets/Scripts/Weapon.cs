@@ -91,7 +91,6 @@ public class Weapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider colli)
 	{
-		Debug.Log(colli.tag);
 		if (colli.tag != this._targetTag) 
 		{
 			if (colli.GetComponent<PlayerController>() != null)
