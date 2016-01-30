@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Baby : MonoBehaviour
 {
+	private Rigidbody myRigidbody;
+
 	[SerializeField]
 	private bool isCatch = false;
 	[SerializeField]
 	private bool isMoving = false;
 	[SerializeField]
 	private bool isArrived = false;
-	private Rigidbody myRigidbody;
 
 	[SerializeField]
 	private Vector3 targetPos;
@@ -21,7 +22,6 @@ public class Baby : MonoBehaviour
 	{
 		myRigidbody = GetComponent<Rigidbody>();
 		targetPos = this.transform.position;
-		Debug.Log("Arrivé à " + transform.position);
 	}
 	
 	void Update ()
@@ -35,6 +35,11 @@ public class Baby : MonoBehaviour
 		isCatch = true;
 		isMoving = false;
 		isArrived = false;
+	}
+
+	public void Ejection(Vector3 _force)
+	{
+		myRigidbody.AddForce(_force);
 	}
 
 	IEnumerator WalkCoroutine()
@@ -53,7 +58,6 @@ public class Baby : MonoBehaviour
 			}
 			yield return null;
 		}
-
 		isMoving = false;
 	}
 }
