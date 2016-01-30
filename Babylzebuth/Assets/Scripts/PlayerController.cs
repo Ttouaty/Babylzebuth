@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
 	private float _inputRawZ;
 	private float _inputRawX;
 
-	private float _inputZ;
-	private float _inputX;
-
     private Rigidbody _rigidB;
     private Transform _transf;
 
@@ -35,8 +32,7 @@ public class PlayerController : MonoBehaviour
 
     //Max speeds
 	[Header("Movement")]
-	[SerializeField]
-    private float _maxSpeed = 10;
+    public float _maxSpeed = 10;
 
     //Vectors affecting the player
     [SerializeField]
@@ -128,7 +124,8 @@ public class PlayerController : MonoBehaviour
 		// A REFAIRE AC LES SPRITES
 		//if(this._activeSpeed.magnitude > 0.5f)
 		//	this.transform.rotation = Quaternion.LookRotation(this._activeSpeed.normalized);
-		this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(-this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
+		if (Mathf.Sign(-this._orientation.x) != 0)
+			this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(-this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
 
 		this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName), 0, Input.GetAxis(this._vertical2AxisName)));
 	}
@@ -174,8 +171,8 @@ public class PlayerController : MonoBehaviour
 		this._inputRawX = this._allowInput ? Input.GetAxisRaw(this._horizontalAxisName) : 0;
 		this._inputRawZ = this._allowInput ? Input.GetAxisRaw(this._verticalAxisName) : 0;
 
-		this._inputX = this._allowInput ? Input.GetAxis(this._horizontalAxisName) : 0;
-		this._inputZ = this._allowInput ? Input.GetAxis(this._verticalAxisName) : 0;
+		//this._inputX = this._allowInput ? Input.GetAxis(this._horizontalAxisName) : 0;
+		//this._inputZ = this._allowInput ? Input.GetAxis(this._verticalAxisName) : 0;
 
 		this._orientation.x = Input.GetAxis(this._horizontalAxisName);
 		this._orientation.z = Input.GetAxis(this._verticalAxisName);
