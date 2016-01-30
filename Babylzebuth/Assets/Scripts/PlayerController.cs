@@ -46,7 +46,12 @@ public class PlayerController : MonoBehaviour
 	private float _invulTime = 0f; //Secondes of invulnerability
 	private float _stunTime = 0f; //Secondes of stun on Hit
 
+	//Projectile
+	[SerializeField]
+	private Weapon _weapon;
+	
 	private bool _projectileLaunched = false;
+
     #endregion
 
     //States
@@ -62,7 +67,9 @@ public class PlayerController : MonoBehaviour
 		this._horizontalAxisName = this._playerName +"_Horizontal";
 		this._verticalAxisName = this._playerName + "_Vertical";
 		this._attackInputName = this._playerName + "_Attack";
+
 		Application.targetFrameRate = 60; //Caps the game at 60 fps (optionnal but recommended for precise jump)
+
 		this._rigidB = this.GetComponent<Rigidbody>();
         this._transf = this.GetComponent<Transform>();
         
@@ -145,6 +152,9 @@ public class PlayerController : MonoBehaviour
 		this._inputX = this._allowInput ? Input.GetAxis(this._horizontalAxisName) : 0;
 		this._inputZ = this._allowInput ? Input.GetAxis(this._verticalAxisName) : 0;
 
+		this._orientation.x = Input.GetAxis(this._horizontalAxisName);
+		this._orientation.z = Input.GetAxis(this._verticalAxisName);
+
 		if (Input.GetButtonDown(this._attackInputName))
 		{
 			this.ProcessAction();
@@ -207,20 +217,21 @@ public class PlayerController : MonoBehaviour
 	{
 		if (this._projectileLaunched)
 		{
-			Debug.Log("retrieve Weapon");
-			this._projectileLaunched = false;
+			this._projectileLaunched = !this._weapon.Retrieve(this.transform);
 		}
 		else
 		{
-			Debug.Log("launch weapon");
-			this._projectileLaunched = true;
+			Vector3 direction = new Vector3(Input.GetAxis(this._horizontalAxisName), 0, Input.GetAxis(this._verticalAxisName));
+			if (direction.magnitude == 0)
+				direction = this._transf.forward;
+			this._projectileLaunched  = this._weapon.Launch(this._transf.position, direction, this.tag);
 		}
 	}
 	
     
     #region Attacks
 
-	public void Damage(int amount, float stunTime, Vector3 ejection)
+	public void Damage(float stunTime, Vector3 ejection)
 	{
 		if (this._invulTime > 0)
 			return;
