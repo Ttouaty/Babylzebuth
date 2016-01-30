@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 	private AudioSource mySounds;
 
 	[SerializeField]
-	private AudioClip[] SpikesSound;
+	private AudioClip SpikesSound;
 
 	[SerializeField]
 	private GameObject baby;
@@ -19,19 +19,13 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private List<Trap> traps = new List<Trap>();
 
-	[SerializeField]
-	private float timer = 0;
 
-	[SerializeField]
 	private bool gameIsOver = false;
 
-	[SerializeField]
+	private float timer = 0;
 	private int scoreP1 = 0;
-	[SerializeField]
 	private int scoreP2 = 0;
-	[SerializeField]
 	private int scoreP3 = 0;
-	[SerializeField]
 	private int scoreP4 = 0;
 
 	[SerializeField]
@@ -124,8 +118,11 @@ public class GameManager : MonoBehaviour
 	{
 		while(true)
 		{
+			yield return new WaitForSeconds(1);
+
 			for (int i = 0; i < traps.Count; i++)
 			{
+				mySounds.PlayOneShot(SpikesSound);
 				traps[i].transform.position = new Vector3(traps[i].transform.position.x, traps[i].transform.position.y + 0.5f, traps[i].transform.position.z);
 				traps[i].canStun = true;
 			}
@@ -134,11 +131,12 @@ public class GameManager : MonoBehaviour
 
 			for (int i = 0; i < traps.Count; i++)
 			{
+				mySounds.PlayOneShot(SpikesSound);
 				traps[i].transform.position = new Vector3(traps[i].transform.position.x, traps[i].transform.position.y - 0.5f, traps[i].transform.position.z);
 				traps[i].canStun = false;
 			}
 
-			yield return new WaitForSeconds(3);
+			yield return new WaitForSeconds(2);
 		}
 	}
 }

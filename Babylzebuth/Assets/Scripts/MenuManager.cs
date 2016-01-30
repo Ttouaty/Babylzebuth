@@ -6,6 +6,11 @@ public class MenuManager : MonoBehaviour
 {
 	public static MenuManager Instance;
 
+	[SerializeField]
+	private AudioSource mySounds;
+	[SerializeField]
+	private AudioClip buttonSound;
+
 	public Canvas myCanvas;
 	public Transform myEventSys;
 
@@ -50,9 +55,9 @@ public class MenuManager : MonoBehaviour
 		}
 	}
 
-	void Update ()
+	void Start ()
 	{
-	
+		mySounds = GetComponent<AudioSource>();
 	}
 
 	public void Clock(string _timerToShow)
@@ -79,6 +84,8 @@ public class MenuManager : MonoBehaviour
 
 	public void ToPlayState()
 	{
+		Debug.Log(buttonSound);
+		mySounds.PlayOneShot(buttonSound);
 		ChangeState(GameState.Play);
 		Application.LoadLevel("FirstStage");
 	}
