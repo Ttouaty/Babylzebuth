@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 	private bool _isStunned = false;
 	private RaycastHit _hit;
 
+	private GameObject baby;
+
     #region Unity virtuals
     void Start()
     {
@@ -87,6 +89,14 @@ public class PlayerController : MonoBehaviour
 		this.ProcessOrientation();
 
 		this.ApplyCharacterFinalVelocity();
+
+		if (baby != null && Input.GetKeyDown(KeyCode.P))
+		{
+			baby.GetComponent<Baby>().Ejection(Vector3.forward);
+			baby.transform.parent = null;
+			baby = null;
+			GameManager.Instance.AddScore(this._playerName);
+		}
     }
 
 	private void ProcessOrientation()
@@ -230,4 +240,22 @@ public class PlayerController : MonoBehaviour
 	}
     
     #endregion
+
+	#region Collisions
+
+	void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.tag == "Traps")
+		{
+
+		}
+
+		if (other.gameObject.tag == "Babies" && baby == null)
+		{
+			other.gameObject.GetComponent<Baby>().Catch(this.transform);
+			baby = other.gameObject;
+		}
+	}
+
+	#endregion
 }

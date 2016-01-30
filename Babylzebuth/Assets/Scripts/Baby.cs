@@ -4,6 +4,7 @@ using System.Collections;
 public class Baby : MonoBehaviour
 {
 	private Rigidbody myRigidbody;
+	private Transform myTransform;
 
 	[SerializeField]
 	private bool isCatch = false;
@@ -21,6 +22,7 @@ public class Baby : MonoBehaviour
 	void Start ()
 	{
 		myRigidbody = GetComponent<Rigidbody>();
+		myTransform = GetComponent<Transform>();
 		targetPos = this.transform.position;
 	}
 	
@@ -30,15 +32,22 @@ public class Baby : MonoBehaviour
 			StartCoroutine("WalkCoroutine");
 	}
 
-	public void Catch()
+	public void Catch(Transform _playerTransform)
 	{
 		isCatch = true;
 		isMoving = false;
 		isArrived = false;
+
+		myTransform.position = _playerTransform.position;
+		myTransform.SetParent(_playerTransform);
+		this.GetComponent<Renderer>().enabled = false;
 	}
 
 	public void Ejection(Vector3 _force)
 	{
+		myTransform.parent = null;
+		this.GetComponent<Renderer>().enabled = true;
+		Debug.Log(_force);
 		myRigidbody.AddForce(_force);
 	}
 
@@ -50,7 +59,7 @@ public class Baby : MonoBehaviour
 		while (!isCatch)
 		{
 			Vector3 dir = this.transform.position - targetPos;
-			this.myRigidbody.velocity = dir.normalized * -speed * Time.deltaTime;
+			this.myRigidbody.velocity = dir.normalized * speed;
 			if(dir.magnitude < 1)
 			{
 				this.isArrived = true;
