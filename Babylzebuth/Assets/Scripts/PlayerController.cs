@@ -100,9 +100,7 @@ public class PlayerController : MonoBehaviour
 		if (baby != null && Input.GetKeyDown(KeyCode.P))
 		{
 			baby.GetComponent<Baby>().Ejection(Vector3.forward);
-			baby.transform.parent = null;
 			baby = null;
-			GameManager.Instance.AddScore(this._playerName);
 		}
     }
 
@@ -197,8 +195,6 @@ public class PlayerController : MonoBehaviour
 					this._activeSpeed.z = Mathf.Sign(this._activeSpeed.z) * (Mathf.Abs(this._activeSpeed.z) - this._friction);
 			}
 		}
-
-		
     }
     
     void ApplyCharacterFinalVelocity()
@@ -256,15 +252,27 @@ public class PlayerController : MonoBehaviour
 
 	void OnCollisionEnter(Collision other)
 	{
-		if (other.gameObject.tag == "Traps")
-		{
-
-		}
-
 		if (other.gameObject.tag == "Babies" && baby == null)
 		{
 			other.gameObject.GetComponent<Baby>().Catch(this.transform);
 			baby = other.gameObject;
+		}
+
+		if(other.gameObject.tag == "Altar" && baby != null)
+		{
+			other.gameObject.GetComponent<Baby>().Kill();
+			GameManager.Instance.AddScore(this._playerName);
+		}
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Traps")
+		{
+			if (other.GetComponent<Trap>().canStun)
+			{
+				Damage(1, -_orientation.normalized * 15);
+			}
 		}
 	}
 

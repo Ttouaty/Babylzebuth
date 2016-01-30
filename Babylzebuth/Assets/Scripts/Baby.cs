@@ -47,8 +47,13 @@ public class Baby : MonoBehaviour
 	{
 		myTransform.parent = null;
 		this.GetComponent<Renderer>().enabled = true;
-		Debug.Log(_force);
 		myRigidbody.AddForce(_force);
+	}
+
+	public void Kill()
+	{
+		myTransform.parent = null;
+		Destroy(this.gameObject);
 	}
 
 	IEnumerator WalkCoroutine()
