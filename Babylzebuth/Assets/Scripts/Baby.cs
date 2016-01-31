@@ -90,7 +90,7 @@ public class Baby : MonoBehaviour
 
 	public void Kill()
 	{
-		mySounds.PlayOneShot(babySound);
+		mySounds.PlayOneShot(babySound,1);
 		myTransform.parent = null;
 		Destroy(this.gameObject);
 		StopAllCoroutines();

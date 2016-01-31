@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour {
 		mySounds = GetComponent<AudioSource>();
 		this._rigidB = GetComponent<Rigidbody>();
 		this.GetComponent<Collider>().enabled = false;
-		this.GetComponent<MeshRenderer>().enabled = false;
+		this.GetComponent<SpriteRenderer>().enabled = false;
 	}
 
 	public bool Retrieve(Transform target) 
@@ -48,7 +48,7 @@ public class Weapon : MonoBehaviour {
 	{
 		if (!this._isLaunchable)
 			return false;
-		this.GetComponent<MeshRenderer>().enabled = true;
+		this.GetComponent<SpriteRenderer>().enabled = true;
 		this._isRetrievable = false;
 		this.GetComponent<Collider>().enabled = true;
 		this.transform.parent = null;
@@ -85,7 +85,7 @@ public class Weapon : MonoBehaviour {
 		}
 		this._isReturning = false;
 		this.GetComponent<Collider>().enabled = false;
-		this.GetComponent<MeshRenderer>().enabled = false;
+		this.GetComponent<SpriteRenderer>().enabled = false;
 		this._isLaunchable = true;
 	}
 

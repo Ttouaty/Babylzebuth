@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private AudioSource mySounds;
 
+	public SpriteRenderer myShield;
+
 	[SerializeField]
 	private AudioClip throwWeaponSound;
 	private Animator myAnim;
@@ -111,6 +113,13 @@ public class PlayerController : MonoBehaviour
 		this.ProcessOrientation();
 
 		this.ApplyCharacterFinalVelocity();
+
+		if (this._invulTime > 0)
+		{
+			myShield.enabled = true;
+		}
+		else
+			myShield.enabled = false;
 
 		//if (baby != null && Input.GetKeyDown(KeyCode.P))
 		//{

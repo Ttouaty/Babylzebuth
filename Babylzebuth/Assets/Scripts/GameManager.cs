@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
 			for (int i = 0; i < spikes.Count; i++)
 			{
 				spikes[i].GetComponent<SpriteRenderer>().sprite = trapSprite3;
-				mySounds.PlayOneShot(SpikesSound);
+				mySounds.PlayOneShot(SpikesSound, 0.25f);
 				spikes[i].GetComponent<Collider>().enabled = true;
 				spikes[i].canStun = true;
 			}
@@ -197,7 +197,7 @@ public class GameManager : MonoBehaviour
 			for (int i = 0; i < spikes.Count; i++)
 			{
 				spikes[i].GetComponent<SpriteRenderer>().sprite = trapSprite2;
-				mySounds.PlayOneShot(SpikesSound);
+				mySounds.PlayOneShot(SpikesSound, 0.25f);
 				spikes[i].GetComponent<Collider>().enabled = false;
 				spikes[i].canStun = false;
 			}
