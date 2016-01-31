@@ -112,8 +112,6 @@ public class PlayerController : MonoBehaviour
 
 		this.ApplyCharacterFinalVelocity();
 
-		myAnim.SetBool("Throw", throwWeapon);
-
 		//if (baby != null && Input.GetKeyDown(KeyCode.P))
 		//{
 		//	baby.GetComponent<Baby>().Ejection(Vector3.forward);
@@ -123,9 +121,8 @@ public class PlayerController : MonoBehaviour
 
 	private void ProcessOrientation()
 	{
-
 		if (Mathf.Sign(-this._orientation.x) != 0)
-			this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(-this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
+			this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
 
 		if (Input.GetAxis(this._horizontal2AxisName) != 0 || Input.GetAxis(this._vertical2AxisName) != 0)
 			this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName) * Mathf.Sign(this.transform.localScale.x), 0, Input.GetAxis(this._vertical2AxisName)));
@@ -156,6 +153,7 @@ public class PlayerController : MonoBehaviour
 			this._isStunned = false;
 			this._allowInput = true;
 			this._stunTime = 0;
+			myAnim.SetBool("Stun", _isStunned);
 		}
     }
 
@@ -238,14 +236,13 @@ public class PlayerController : MonoBehaviour
 
 	private void ProcessAction()
 	{
-		throwWeapon = false;
 		if (this._projectileLaunched)
 		{
 			this._projectileLaunched = !this._weapon.Retrieve(this.transform);
 		}
 		else
 		{
-			throwWeapon = true;
+			myAnim.SetTrigger("Throw");
 			mySounds.PlayOneShot(throwWeaponSound);
 			this._projectileLaunched = this._weapon.Launch(this._transf.position, new Vector3(this._aimingLine.forward.x * Mathf.Sign(this.transform.localScale.x), this._aimingLine.forward.y, this._aimingLine.forward.z), this.tag);
 		}

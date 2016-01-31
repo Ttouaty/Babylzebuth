@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
 		while (Physics.OverlapSphere(newBaby.transform.position, newBaby.GetComponent<Collider>().bounds.extents.x, ~(1 << LayerMask.NameToLayer("Stage"))).Length > 2)
 		{
 			baby.transform.position = zoneBounds.center + getPositionInZone(zoneBounds);
-			baby.transform.position = new Vector3(baby.transform.position.x, 0.5f, baby.transform.position.z);
+			//baby.transform.position = new Vector3(baby.transform.position.x, 0.5f, baby.transform.position.z);
 			print("relaunch");
 			yield return new WaitForEndOfFrame();
 		}
@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
 	{ 
 		
 		Vector3 returnVect = new Vector3(	Random.Range(-zone.extents.x, zone.extents.x),
-											Random.Range(-zone.extents.y, zone.extents.y),
+											Random.Range(0, zone.extents.y),
 											Random.Range(-zone.extents.z, zone.extents.z));
 
 		return returnVect;

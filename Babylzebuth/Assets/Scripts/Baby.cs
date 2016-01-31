@@ -42,6 +42,8 @@ public class Baby : MonoBehaviour
 	{
 		if (!isCatch && !isMoving && !isArrived && isOnFloor)
 			StartCoroutine("WalkCoroutine");
+		if (isArrived)
+			this.myRigidbody.velocity *= 0.95f;
 	}
 
 	public void Catch(Transform _playerTransform)
