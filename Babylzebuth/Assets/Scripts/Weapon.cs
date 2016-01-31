@@ -67,6 +67,7 @@ public class Weapon : MonoBehaviour {
 		this._rigidB.velocity = Vector3.zero;
 		this._isRetrievable = true;
 		this.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
+		this.GetComponent<Collider>().enabled = false;
 		StopAllCoroutines();
 	}
 
@@ -98,13 +99,14 @@ public class Weapon : MonoBehaviour {
 			{
 				mySounds.PlayOneShot(hitSound);
 				colli.GetComponent<PlayerController>().Damage(1, this._direction.normalized * 20);
+				this.Stop();
 			}
-			else
+			else if(colli.gameObject.layer != LayerMask.NameToLayer("Traps"))
 			{
 				mySounds.PlayOneShot(hitWallSound);
+				this.Stop();
 			}
 
-			this.Stop();
 		}
 	}
 

@@ -104,6 +104,9 @@ public class PlayerController : MonoBehaviour
 	 */
 	void Update()
     {
+		this._inputRawX = this._allowInput ? Input.GetAxisRaw(this._horizontalAxisName) : 0;
+		this._inputRawZ = this._allowInput ? Input.GetAxisRaw(this._verticalAxisName) : 0;
+
         if (this._allowInput)
             this.ProcessInputs();
 		
@@ -173,10 +176,6 @@ public class PlayerController : MonoBehaviour
 			this._activeSpeed.x = 0;
 		if (this._inputRawZ != Mathf.Sign(Input.GetAxisRaw(this._verticalAxisName)) && Input.GetAxisRaw(this._verticalAxisName) != 0f)
 			this._activeSpeed.z = 0;
-
-
-		this._inputRawX = this._allowInput ? Input.GetAxisRaw(this._horizontalAxisName) : 0;
-		this._inputRawZ = this._allowInput ? Input.GetAxisRaw(this._verticalAxisName) : 0;
 
 		//this._inputX = this._allowInput ? Input.GetAxis(this._horizontalAxisName) : 0;
 		//this._inputZ = this._allowInput ? Input.GetAxis(this._verticalAxisName) : 0;
@@ -283,13 +282,14 @@ public class PlayerController : MonoBehaviour
 	}
 
 
-	private void addStun(float amount)
+	private void addStun(float amount, bool stunAnim = true)
 	{
 		this._isStunned = true;
 		this._stunTime += amount;
 		if(amount > 0)
 			this._allowInput = false;
-		myAnim.SetBool("Stun", _isStunned);
+		if (stunAnim)
+			myAnim.SetBool("Stun", _isStunned);
 	}
     
     #endregion
@@ -322,6 +322,8 @@ public class PlayerController : MonoBehaviour
 		{
 			baby.GetComponent<Baby>().Kill();
 			GameManager.Instance.AddScore(this._playerName);
+			addStun(1, false);
+			myAnim.SetTrigger("Sacrifice");
 		}
 	}
 

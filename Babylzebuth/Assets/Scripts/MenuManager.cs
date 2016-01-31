@@ -96,7 +96,7 @@ public class MenuManager : MonoBehaviour
 	{
 		mySounds.PlayOneShot(buttonSound);
 		ChangeState(GameState.Play);
-		Application.LoadLevel("FirstStage");
+		Application.LoadLevel("Scene2D");
 		mySounds.loop = true;
 		mySounds.PlayOneShot(themeSound[1], 0.5f);
 	}
@@ -105,7 +105,7 @@ public class MenuManager : MonoBehaviour
 	{
 		if (currentState == GameState.Play)
 		{
-			Application.UnloadLevel("FirstStage");
+			Application.UnloadLevel("Scene2D");
 		}
 		ChangeState(GameState.Menu);
 	}
