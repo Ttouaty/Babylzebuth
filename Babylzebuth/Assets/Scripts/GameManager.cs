@@ -14,6 +14,14 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private AudioClip ArrowsSound;
 
+
+	[SerializeField]
+	private Sprite trapSprite3;
+	[SerializeField]
+	private Sprite trapSprite2;
+	[SerializeField]
+	private Sprite trapSprite1;
+
 	[SerializeField]
 	private GameObject baby;
 	[SerializeField]
@@ -140,9 +148,9 @@ public class GameManager : MonoBehaviour
 
 			for (int i = 0; i < spikes.Count; i++)
 			{
+				spikes[i].GetComponent<SpriteRenderer>().sprite = trapSprite3;
 				mySounds.PlayOneShot(SpikesSound);
-				spikes[i].transform.position = new Vector3(spikes[i].transform.position.x, spikes[i].transform.position.y + 0.5f, spikes[i].transform.position.z);
-				spikes[i].GetComponent<Collider>().enabled = false;
+				spikes[i].GetComponent<Collider>().enabled = true;
 				spikes[i].canStun = true;
 			}
 
@@ -150,9 +158,9 @@ public class GameManager : MonoBehaviour
 
 			for (int i = 0; i < spikes.Count; i++)
 			{
+				spikes[i].GetComponent<SpriteRenderer>().sprite = trapSprite2;
 				mySounds.PlayOneShot(SpikesSound);
-				spikes[i].transform.position = new Vector3(spikes[i].transform.position.x, spikes[i].transform.position.y - 0.5f, spikes[i].transform.position.z);
-				spikes[i].GetComponent<Collider>().enabled = true;
+				spikes[i].GetComponent<Collider>().enabled = false;
 				spikes[i].canStun = false;
 			}
 
