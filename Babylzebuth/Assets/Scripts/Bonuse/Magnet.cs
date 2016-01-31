@@ -13,7 +13,8 @@ public class Magnet : Bonus
 		GameObject[] babies = GameObject.FindGameObjectsWithTag("Babies");
 		for (int i = 0; i < babies.Length; ++i)
 		{
-			babies[i].GetComponent<Baby>().FocusTarget(target);
+			if(Vector3.Distance(target, babies[i].transform.position) < 5)
+				babies[i].GetComponent<Baby>().FocusTarget(target);
 		}
 
 		yield return new WaitForSeconds(this.timeActive);

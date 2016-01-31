@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private AudioClip ArrowsSound;
 
-
 	[SerializeField]
 	private Sprite trapSprite3;
 	[SerializeField]
@@ -22,10 +21,15 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private Sprite trapSprite1;
 
+	[Header("BabySpawn")]
 	[SerializeField]
 	private GameObject baby;
 	[SerializeField]
-	private GameObject bonus;
+	private GameObject[] SpawnZones;
+	[SerializeField]
+	private int babiesTimeRate = 5;
+
+	[Space(5)]
 	[SerializeField]
 	private List<Trap> spikes = new List<Trap>();
 	[SerializeField]
@@ -47,20 +51,20 @@ public class GameManager : MonoBehaviour
 	private int scoreP3 = 0;
 	private int scoreP4 = 0;
 
-	[SerializeField]
-	private int babiesTimeRate = 5;
+
 
 	[SerializeField]
 	private Bonus[] BonusList;
 	[SerializeField]
 	private Transform BonusAltar;
 	public bool BonusSpawned = false;
+	private float bonusElapsedTime = 0;
+	public List<Baby> babiesActive = new List<Baby>();
 
 	void Start ()
 	{
 		Instance = this;
 		mySounds = GetComponent<AudioSource>();
-
 		timer = 0;
 		scoreP1 = 0;
 		scoreP2 = 0;
@@ -124,21 +128,56 @@ public class GameManager : MonoBehaviour
 
 	IEnumerator BabiesCoroutine()
 	{
-		Instantiate(baby, new Vector3(Random.Range(-9, 9), 0.5f, Random.Range(-9, 9)), Quaternion.identity);
-		yield return new WaitForSeconds(babiesTimeRate);
+		StartCoroutine(PopBaby());
+		yield return new WaitForSeconds(babiesTimeRate) ;
 		StartCoroutine("BabiesCoroutine");
+	}
+
+	IEnumerator PopBaby()
+	{
+		GameObject selectedSpawnZone = SpawnZones[Random.Range((int)0, (int)SpawnZones.Length)];
+		Bounds zoneBounds = selectedSpawnZone.GetComponent<Collider>().bounds;
+		GameObject newBaby = Instantiate(baby, zoneBounds.center + getPositionInZone(zoneBounds), Quaternion.identity) as GameObject;
+		babiesActive.Add(newBaby.GetComponent<Baby>());
+		while (Physics.OverlapSphere(newBaby.transform.position, newBaby.GetComponent<Collider>().bounds.extents.x, ~(1 << LayerMask.NameToLayer("Stage"))).Length > 2)
+		{
+			baby.transform.position = zoneBounds.center + getPositionInZone(zoneBounds);
+			baby.transform.position = new Vector3(baby.transform.position.x, 0.5f, baby.transform.position.z);
+			print("relaunch");
+			yield return new WaitForEndOfFrame();
+		}
+	}
+
+	Vector3 getPositionInZone(Bounds zone, int[] constraint = null)
+	{ 
+		
+		Vector3 returnVect = new Vector3(	Random.Range(-zone.extents.x, zone.extents.x),
+											Random.Range(-zone.extents.y, zone.extents.y),
+											Random.Range(-zone.extents.z, zone.extents.z));
+
+		return returnVect;
 	}
 
 	IEnumerator BonusCoroutine()
 	{
-		if (!this.BonusSpawned)
+		float spawnTime = 8;
+		while (true)
 		{
-			Instantiate(BonusList[Random.Range((int)0, (int)BonusList.Length)], BonusAltar.position, Quaternion.identity);
-			this.BonusSpawned = true;
+			bonusElapsedTime += Time.deltaTime;
+			if (bonusElapsedTime >= spawnTime)
+			{
+				resetBonusTimer();
+				if (!this.BonusSpawned)
+				{
+					Instantiate(BonusList[Random.Range((int)0, (int)BonusList.Length)], BonusAltar.position, Quaternion.identity);
+					this.BonusSpawned = true;
+				}
+			}
+			yield return new WaitForEndOfFrame();
 		}
-		yield return new WaitForSeconds(8);
-		StartCoroutine("BonusCoroutine");
 	}
+
+	public void resetBonusTimer() { bonusElapsedTime = 0; }
 
 	IEnumerator SpikesCoroutine()
 	{

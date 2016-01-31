@@ -11,6 +11,8 @@ public abstract class Bonus : MonoBehaviour {
 		{
 			Action(colli.transform);
 			GameManager.Instance.BonusSpawned = false;
+			GameManager.Instance.resetBonusTimer();
+			Debug.Log(GetType());
 			Destroy(this.gameObject);
 		}
 	}

@@ -27,6 +27,7 @@ public class Weapon : MonoBehaviour {
 	{
 		mySounds = GetComponent<AudioSource>();
 		this._rigidB = GetComponent<Rigidbody>();
+		this.GetComponent<Collider>().enabled = false;
 		this.GetComponent<MeshRenderer>().enabled = false;
 	}
 

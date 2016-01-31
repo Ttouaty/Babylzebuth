@@ -81,7 +81,7 @@ public class Baby : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1);
 		this.isCatchable = true;
-		this.gameObject.layer = LayerMask.NameToLayer("Default");
+		this.gameObject.layer = LayerMask.NameToLayer("Baby");
 		yield return new WaitForSeconds(1.5f);
 		this.isOnFloor = true;
 	}
@@ -92,11 +92,13 @@ public class Baby : MonoBehaviour
 		myTransform.parent = null;
 		Destroy(this.gameObject);
 		StopAllCoroutines();
+		GameManager.Instance.babiesActive.Remove(this);
 	}
 
 	public void FocusTarget(Vector3 target)
 	{
 		targetPos = target;
+		isArrived = false;
 	}
 
 	IEnumerator WalkCoroutine()

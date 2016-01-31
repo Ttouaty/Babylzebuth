@@ -127,16 +127,16 @@ public class PlayerController : MonoBehaviour
 		if (Mathf.Sign(-this._orientation.x) != 0)
 			this.transform.localScale = new Vector3(Mathf.Abs(this.transform.localScale.x) * Mathf.Sign(-this._orientation.x), this.transform.localScale.y, this.transform.localScale.z);
 
-		this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName) * Mathf.Sign(this.transform.localScale.x), 0, Input.GetAxis(this._vertical2AxisName)));
+		if (Input.GetAxis(this._horizontal2AxisName) != 0 || Input.GetAxis(this._vertical2AxisName) != 0)
+			this.ShowAimingLine(new Vector3(Input.GetAxis(this._horizontal2AxisName) * Mathf.Sign(this.transform.localScale.x), 0, Input.GetAxis(this._vertical2AxisName)));
+		else if (this._activeSpeed.magnitude > 0.2f)
+			this.ShowAimingLine(new Vector3(this._activeSpeed.x * Mathf.Sign(this.transform.localScale.x), 0, -this._activeSpeed.z));
 	}
 
 	private void ShowAimingLine(Vector3 direction)
 	{
 		this._aimingLine.forward = this.transform.forward;
-		if (direction.magnitude > 0.2f)
-			this._aimingLine.rotation = Quaternion.Euler(new Vector3(0, Vector3.Angle(Vector3.right, direction) * Mathf.Sign(direction.z) - this.transform.rotation.y + 90, 0));
-		else
-			this._aimingLine.forward = this._transf.forward;
+		this._aimingLine.rotation = Quaternion.Euler(new Vector3(0, Vector3.Angle(Vector3.right, direction) * Mathf.Sign(direction.z) - this.transform.rotation.y + 90, 0));
 	}
     #endregion
     
@@ -174,8 +174,8 @@ public class PlayerController : MonoBehaviour
 		//this._inputX = this._allowInput ? Input.GetAxis(this._horizontalAxisName) : 0;
 		//this._inputZ = this._allowInput ? Input.GetAxis(this._verticalAxisName) : 0;
 
-		this._orientation.x = Input.GetAxis(this._horizontalAxisName);
-		this._orientation.z = Input.GetAxis(this._verticalAxisName);
+		this._orientation.x = Input.GetAxis(this._horizontalAxisName) != 0 ? Input.GetAxis(this._horizontalAxisName) : this._orientation.x;
+		this._orientation.z = Input.GetAxis(this._verticalAxisName) != 0 ? Input.GetAxis(this._verticalAxisName) : this._orientation.z;
 
 
 		if (Input.GetButtonDown(this._attackInputName))
