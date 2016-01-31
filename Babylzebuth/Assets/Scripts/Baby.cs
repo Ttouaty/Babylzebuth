@@ -55,8 +55,6 @@ public class Baby : MonoBehaviour
 		isMoving = false;
 		isArrived = false;
 
-		myTransform.position = _playerTransform.position;
-		myTransform.SetParent(_playerTransform);
 		this.GetComponent<Renderer>().enabled = false;
 		this.GetComponent<Collider>().enabled = false;
 		myRigidbody.velocity = Vector3.zero;
