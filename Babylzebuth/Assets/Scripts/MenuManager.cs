@@ -84,6 +84,8 @@ public class MenuManager : MonoBehaviour
 			panelScore.GetComponent<Image>().sprite = couronneP1;
 		else if (_scoreP1 < _scoreP2)
 			panelScore.GetComponent<Image>().sprite = couronneP2;
+		else if (_scoreP1 == _scoreP2)
+			ToMenuState();
 	}
 
 	public void ToPlayState()

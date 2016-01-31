@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 			babiesTimeRate -= 1;
 		}
 
-		if (timer >= 60 && !gameIsOver)
+		if (timer >= 10 && !gameIsOver)
 		{
 			gameIsOver = true;
 			timer = 60;
