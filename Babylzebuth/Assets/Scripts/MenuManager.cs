@@ -27,12 +27,9 @@ public class MenuManager : MonoBehaviour
 	public Text scoreInGameP1;
 	public Text scoreInGameP2;
 
-	public Text scoreP1;
-	public Text scoreP2;
-
 	public Sprite couronne;
-	public Image couronneP1;
-	public Image couronneP2;
+	public Sprite couronneP1;
+	public Sprite couronneP2;
 
 	public GameObject playButton;
 	public GameObject scoreButton;
@@ -84,12 +81,9 @@ public class MenuManager : MonoBehaviour
 	public void Podium(int _scoreP1, int _scoreP2)
 	{
 		if (_scoreP1 > _scoreP2)
-			couronneP1.sprite = couronne;
+			panelScore.GetComponent<Image>().sprite = couronneP1;
 		else if (_scoreP1 < _scoreP2)
-			couronneP2.sprite = couronne;
-
-		scoreP1.text = _scoreP1.ToString();
-		scoreP2.text = _scoreP2.ToString();
+			panelScore.GetComponent<Image>().sprite = couronneP2;
 	}
 
 	public void ToPlayState()

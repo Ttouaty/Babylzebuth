@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
 			gameIsOver = true;
 			timer = 60;
 			Time.timeScale = 0;
+			MenuManager.Instance.ChangeState(MenuManager.GameState.Score);
 			MenuManager.Instance.Podium(scoreP1, scoreP2);
 		}
 	}
