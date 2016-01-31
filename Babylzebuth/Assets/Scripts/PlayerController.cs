@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField]
 	private AudioClip throwWeaponSound;
+	private Animator myAnim;
+	private bool throwWeapon = false;
 
     //States
 	private bool _allowInput = true;
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 		mySounds = GetComponent<AudioSource>();
+		myAnim = GetComponent<Animator>();
 
 		this._horizontalAxisName = this._playerName + "_Horizontal";
 		this._verticalAxisName = this._playerName + "_Vertical";
@@ -108,6 +111,8 @@ public class PlayerController : MonoBehaviour
 		this.ProcessOrientation();
 
 		this.ApplyCharacterFinalVelocity();
+
+		myAnim.SetBool("Throw", throwWeapon);
 
 		//if (baby != null && Input.GetKeyDown(KeyCode.P))
 		//{
@@ -215,6 +220,8 @@ public class PlayerController : MonoBehaviour
 					this._activeSpeed.z = Mathf.Sign(this._activeSpeed.z) * (Mathf.Abs(this._activeSpeed.z) - this._friction);
 			}
 		}
+		myAnim.SetFloat("Speed", Mathf.Abs(_activeSpeed.x + _activeSpeed.z));
+
     }
     
     void ApplyCharacterFinalVelocity()
@@ -229,14 +236,16 @@ public class PlayerController : MonoBehaviour
     }
 
 
-	private void ProcessAction() 
+	private void ProcessAction()
 	{
+		throwWeapon = false;
 		if (this._projectileLaunched)
 		{
 			this._projectileLaunched = !this._weapon.Retrieve(this.transform);
 		}
 		else
 		{
+			throwWeapon = true;
 			mySounds.PlayOneShot(throwWeaponSound);
 			this._projectileLaunched = this._weapon.Launch(this._transf.position, new Vector3(this._aimingLine.forward.x * Mathf.Sign(this.transform.localScale.x), this._aimingLine.forward.y, this._aimingLine.forward.z), this.tag);
 		}
@@ -268,13 +277,13 @@ public class PlayerController : MonoBehaviour
 	}
 
 
-
 	private void addStun(float amount)
 	{
 		this._isStunned = true;
 		this._stunTime += amount;
 		if(amount > 0)
 			this._allowInput = false;
+		myAnim.SetBool("Stun", _isStunned);
 	}
     
     #endregion
