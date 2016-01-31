@@ -9,11 +9,16 @@ public abstract class Bonus : MonoBehaviour {
 	{
 		if(colli.tag.Substring(0,6) == "Player")
 		{
-			Action(colli.transform);
-			GameManager.Instance.BonusSpawned = false;
-			GameManager.Instance.resetBonusTimer();
-			Debug.Log(GetType());
-			Destroy(this.gameObject);
+			if (colli.GetComponent<PlayerController>() != null)
+			{
+				Action(colli.transform);
+				GameManager.Instance.BonusSpawned = false;
+				GameManager.Instance.resetBonusTimer();
+				Debug.Log(GetType());
+				Destroy(this.gameObject, timeActive + 0.5f);
+				GetComponent<Renderer>().enabled = false;
+				GetComponent<Collider>().enabled = false;
+			}
 		}
 	}
 
