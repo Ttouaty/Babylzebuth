@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: 8753234ad20ba184db966cdabea222fc
-timeCreated: 1454235192
+timeCreated: 1454241715
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Perso_Azteque_Anim_Sacrifice_0
+    21300002: Perso_Azteque_Anim_Sacrifice_1
+    21300004: Perso_Azteque_Anim_Sacrifice_2
+    21300006: Perso_Azteque_Anim_Sacrifice_3
+    21300008: Perso_Azteque_Anim_Sacrifice_4
+    21300010: Perso_Azteque_Anim_Sacrifice_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +55,67 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Perso_Azteque_Anim_Sacrifice_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 163
+        width: 70
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Sacrifice_1
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 163
+        width: 70
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Sacrifice_2
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 163
+        width: 71
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Sacrifice_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 163
+        width: 75
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Sacrifice_4
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 163
+        width: 75
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Sacrifice_5
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 63
+        width: 53
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

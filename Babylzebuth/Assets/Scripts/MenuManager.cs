@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -14,8 +15,9 @@ public class MenuManager : MonoBehaviour
 	private AudioClip[] themeSound;
 
 	public Canvas myCanvas;
-	public Transform myEventSys;
+	public EventSystem myEventSys;
 
+	public RectTransform panelSplash;
 	public RectTransform panelMenu;
 	public RectTransform panelPlay;
 	public RectTransform panelScore;
@@ -32,9 +34,13 @@ public class MenuManager : MonoBehaviour
 	public Image couronneP1;
 	public Image couronneP2;
 
+	public GameObject playButton;
+	public GameObject scoreButton;
+
 	public GameState currentState = GameState.Menu;
 	public enum GameState
 	{
+		Splash,
 		Menu,
 		Play,
 		Score
@@ -61,6 +67,7 @@ public class MenuManager : MonoBehaviour
 	{
 		mySounds = GetComponent<AudioSource>();
 		mySounds.PlayOneShot(themeSound[0]);
+		myEventSys = transform.GetChild(0).GetComponent<EventSystem>();
 	}
 
 	public void Clock(string _timerToShow)
@@ -69,7 +76,7 @@ public class MenuManager : MonoBehaviour
 	}
 
 	public void ScoreInGame(int _scoreP1, int _scoreP2)
-	{	
+	{
 		scoreInGameP1.text = _scoreP1.ToString();
 		scoreInGameP2.text = _scoreP2.ToString();
 	}
@@ -107,21 +114,36 @@ public class MenuManager : MonoBehaviour
 	{
 		switch (_currentState)
 		{
+			case GameState.Splash:
+				panelSplash.gameObject.SetActive(true);
+				panelMenu.gameObject.SetActive(false);
+				panelPlay.gameObject.SetActive(false);
+				panelScore.gameObject.SetActive(false);
+				myEventSys.firstSelectedGameObject = playButton;
+				break;
 			case GameState.Menu:
+				panelSplash.gameObject.SetActive(false);
 				panelMenu.gameObject.SetActive(true);
 				panelPlay.gameObject.SetActive(false);
 				panelScore.gameObject.SetActive(false);
+				myEventSys.firstSelectedGameObject = playButton;
 				break;
 			case GameState.Play:
+				panelSplash.gameObject.SetActive(false);
 				panelMenu.gameObject.SetActive(false);
 				panelPlay.gameObject.SetActive(true);
 				panelScore.gameObject.SetActive(false);
+				myEventSys.firstSelectedGameObject = null;
 				break;
 			case GameState.Score:
+				panelSplash.gameObject.SetActive(false);
 				panelMenu.gameObject.SetActive(false);
 				panelPlay.gameObject.SetActive(false);
 				panelScore.gameObject.SetActive(true);
+				myEventSys.firstSelectedGameObject = scoreButton;
+				Debug.Log(myEventSys.currentSelectedGameObject);
 				break;
 		}
+		Debug.Log(currentState);
 	}
 }

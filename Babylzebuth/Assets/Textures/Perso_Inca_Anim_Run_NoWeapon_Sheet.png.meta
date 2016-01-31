@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: d1dd1989a42484748b160c4dec5a380b
-timeCreated: 1454235192
+timeCreated: 1454241707
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Perso_Inca_Anim_Run_NoWeapon_Sheet_0
+    21300002: Perso_Inca_Anim_Run_NoWeapon_Sheet_1
+    21300004: Perso_Inca_Anim_Run_NoWeapon_Sheet_2
+    21300006: Perso_Inca_Anim_Run_NoWeapon_Sheet_3
+    21300008: Perso_Inca_Anim_Run_NoWeapon_Sheet_4
+    21300010: Perso_Inca_Anim_Run_NoWeapon_Sheet_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +55,67 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Perso_Inca_Anim_Run_NoWeapon_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 166
+        width: 43
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Inca_Anim_Run_NoWeapon_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 166
+        width: 43
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Inca_Anim_Run_NoWeapon_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 166
+        width: 43
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Inca_Anim_Run_NoWeapon_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 166
+        width: 43
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Inca_Anim_Run_NoWeapon_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 166
+        width: 43
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Inca_Anim_Run_NoWeapon_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 66
+        width: 43
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

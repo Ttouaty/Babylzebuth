@@ -98,7 +98,6 @@ public class GameManager : MonoBehaviour
 			gameIsOver = true;
 			timer = 60;
 			Time.timeScale = 0;
-			MenuManager.Instance.ChangeState(MenuManager.GameState.Score);
 			MenuManager.Instance.Podium(scoreP1, scoreP2);
 		}
 	}
@@ -137,7 +136,7 @@ public class GameManager : MonoBehaviour
 	{
 		GameObject selectedSpawnZone = SpawnZones[Random.Range((int)0, (int)SpawnZones.Length)];
 		Bounds zoneBounds = selectedSpawnZone.GetComponent<Collider>().bounds;
-		GameObject newBaby = Instantiate(baby, zoneBounds.center + getPositionInZone(zoneBounds), Quaternion.identity) as GameObject;
+		GameObject newBaby = Instantiate(baby, zoneBounds.center + getPositionInZone(zoneBounds), Quaternion.AngleAxis(90, Vector3.right)) as GameObject;
 		babiesActive.Add(newBaby.GetComponent<Baby>());
 		while (Physics.OverlapSphere(newBaby.transform.position, newBaby.GetComponent<Collider>().bounds.extents.x, ~(1 << LayerMask.NameToLayer("Stage"))).Length > 2)
 		{
@@ -169,7 +168,7 @@ public class GameManager : MonoBehaviour
 				resetBonusTimer();
 				if (!this.BonusSpawned)
 				{
-					Instantiate(BonusList[Random.Range((int)0, (int)BonusList.Length)], BonusAltar.position, Quaternion.identity);
+					Instantiate(BonusList[Random.Range((int)0, (int)BonusList.Length)], BonusAltar.position, Quaternion.AngleAxis(90,Vector3.right));
 					this.BonusSpawned = true;
 				}
 			}

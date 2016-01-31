@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: 119822496073eeb488c4cf0002158c21
-timeCreated: 1454235191
+timeCreated: 1454241723
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Perso_Azteque_Anim_Run_NoWeapon_Sheet_0
+    21300002: Perso_Azteque_Anim_Run_NoWeapon_Sheet_1
+    21300004: Perso_Azteque_Anim_Run_NoWeapon_Sheet_2
+    21300006: Perso_Azteque_Anim_Run_NoWeapon_Sheet_3
+    21300008: Perso_Azteque_Anim_Run_NoWeapon_Sheet_4
+    21300010: Perso_Azteque_Anim_Run_NoWeapon_Sheet_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +55,67 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Perso_Azteque_Anim_Run_NoWeapon_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 163
+        width: 53
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Run_NoWeapon_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 163
+        width: 53
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Run_NoWeapon_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 163
+        width: 53
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Run_NoWeapon_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 163
+        width: 53
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Run_NoWeapon_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 163
+        width: 53
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Perso_Azteque_Anim_Run_NoWeapon_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 63
+        width: 53
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
