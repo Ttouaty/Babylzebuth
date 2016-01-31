@@ -29,6 +29,7 @@ public class Weapon : MonoBehaviour {
 		this._rigidB = GetComponent<Rigidbody>();
 		this.GetComponent<Collider>().enabled = false;
 		this.GetComponent<SpriteRenderer>().enabled = false;
+		this.transform.rotation = Quaternion.Euler(new Vector3(90,0,0));
 	}
 
 	public bool Retrieve(Transform target) 
@@ -93,8 +94,11 @@ public class Weapon : MonoBehaviour {
 
 	void OnTriggerEnter(Collider colli)
 	{
-		if (colli.tag != this._targetTag) 
+		if (colli.tag != this._targetTag && colli.tag != "spawner") 
 		{
+
+			print(colli.tag);
+			print(_targetTag);
 			if (colli.GetComponent<PlayerController>() != null)
 			{
 				mySounds.PlayOneShot(hitSound);
