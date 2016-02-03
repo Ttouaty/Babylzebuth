@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 			babiesTimeRate -= 1;
 		}
 
-		if (timer >= 10 && !gameIsOver)
+		if (timer >= 60 && !gameIsOver)
 		{
 			gameIsOver = true;
 			timer = 60;
@@ -143,7 +143,6 @@ public class GameManager : MonoBehaviour
 		{
 			baby.transform.position = zoneBounds.center + getPositionInZone(zoneBounds);
 			//baby.transform.position = new Vector3(baby.transform.position.x, 0.5f, baby.transform.position.z);
-			print("relaunch");
 			yield return new WaitForEndOfFrame();
 		}
 	}

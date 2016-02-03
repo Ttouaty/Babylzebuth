@@ -92,17 +92,17 @@ public class MenuManager : MonoBehaviour
 	{
 		mySounds.PlayOneShot(buttonSound);
 		ChangeState(GameState.Play);
-		Application.LoadLevel("Scene2D");
+		Application.LoadLevel(1);
 		mySounds.loop = true;
 		mySounds.PlayOneShot(themeSound[1], 0.5f);
 	}
 
 	public void ToMenuState()
 	{
-		if (currentState == GameState.Play)
-		{
-			Application.UnloadLevel("Scene2D");
-		}
+		//if (currentState == GameState.Play)
+		//{
+		//	Application.UnloadLevel(1);
+		//}
 		ChangeState(GameState.Menu);
 	}
 
@@ -115,31 +115,25 @@ public class MenuManager : MonoBehaviour
 				panelMenu.gameObject.SetActive(false);
 				panelPlay.gameObject.SetActive(false);
 				panelScore.gameObject.SetActive(false);
-				myEventSys.firstSelectedGameObject = playButton;
 				break;
 			case GameState.Menu:
 				panelSplash.gameObject.SetActive(false);
 				panelMenu.gameObject.SetActive(true);
 				panelPlay.gameObject.SetActive(false);
 				panelScore.gameObject.SetActive(false);
-				myEventSys.firstSelectedGameObject = playButton;
 				break;
 			case GameState.Play:
 				panelSplash.gameObject.SetActive(false);
 				panelMenu.gameObject.SetActive(false);
 				panelPlay.gameObject.SetActive(true);
 				panelScore.gameObject.SetActive(false);
-				myEventSys.firstSelectedGameObject = null;
 				break;
 			case GameState.Score:
 				panelSplash.gameObject.SetActive(false);
 				panelMenu.gameObject.SetActive(false);
 				panelPlay.gameObject.SetActive(false);
 				panelScore.gameObject.SetActive(true);
-				myEventSys.firstSelectedGameObject = scoreButton;
-				Debug.Log(myEventSys.currentSelectedGameObject);
 				break;
 		}
-		Debug.Log(currentState);
 	}
 }

@@ -15,7 +15,7 @@ public class Speed : Bonus
 	{
 		target._maxSpeed *= 2;
 		yield return new WaitForSeconds(timeActive);
-		Debug.Log("end");
+		//Debug.Log("end");
 		target._maxSpeed /= 2;
 		
 	}

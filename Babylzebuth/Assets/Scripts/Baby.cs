@@ -11,15 +11,12 @@ public class Baby : MonoBehaviour
 
 	private Rigidbody myRigidbody;
 	private Transform myTransform;
+
 	public bool isCatchable = true;
 
-	[SerializeField]
 	private bool isCatch = false;
-	[SerializeField]
 	private bool isMoving = false;
-	[SerializeField]
 	private bool isArrived = false;
-	[SerializeField]
 	private bool isOnFloor = true;
 
 	[SerializeField]

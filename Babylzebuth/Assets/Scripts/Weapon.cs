@@ -96,9 +96,6 @@ public class Weapon : MonoBehaviour {
 	{
 		if (colli.tag != this._targetTag && colli.tag != "spawner") 
 		{
-
-			print(colli.tag);
-			print(_targetTag);
 			if (colli.GetComponent<PlayerController>() != null)
 			{
 				mySounds.PlayOneShot(hitSound);

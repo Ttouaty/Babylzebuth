@@ -57,11 +57,11 @@ public class PlayerController : MonoBehaviour
 	private AudioSource mySounds;
 
 	public SpriteRenderer myShield;
+	public SpriteRenderer babyHead;
 
 	[SerializeField]
 	private AudioClip throwWeaponSound;
 	private Animator myAnim;
-	private bool throwWeapon = false;
 
     //States
 	private bool _allowInput = true;
@@ -118,17 +118,9 @@ public class PlayerController : MonoBehaviour
 		this.ApplyCharacterFinalVelocity();
 
 		if (this._invulTime > 0)
-		{
 			myShield.enabled = true;
-		}
 		else
 			myShield.enabled = false;
-
-		//if (baby != null && Input.GetKeyDown(KeyCode.P))
-		//{
-		//	baby.GetComponent<Baby>().Ejection(Vector3.forward);
-		//	baby = null;
-		//}
     }
 
 	private void ProcessOrientation()
@@ -277,6 +269,7 @@ public class PlayerController : MonoBehaviour
 		if (this.baby != null)
 		{
 			this.baby.GetComponent<Baby>().Ejection(this.transform.position, direction);
+			babyHead.enabled = false;
 			this.baby = null;
 		}
 	}
@@ -304,6 +297,7 @@ public class PlayerController : MonoBehaviour
 			{
 				other.gameObject.GetComponent<Baby>().Catch(this.transform);
 				baby = other.gameObject;
+				babyHead.enabled = true;
 			}
 		}
 	}
@@ -321,6 +315,7 @@ public class PlayerController : MonoBehaviour
 		else if (other.gameObject.tag == "Altar" && baby != null)
 		{
 			baby.GetComponent<Baby>().Kill();
+			babyHead.enabled = false;
 			GameManager.Instance.AddScore(this._playerName);
 			addStun(1, false);
 			myAnim.SetTrigger("Sacrifice");

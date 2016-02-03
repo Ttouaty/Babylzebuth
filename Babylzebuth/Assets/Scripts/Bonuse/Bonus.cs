@@ -14,7 +14,7 @@ public abstract class Bonus : MonoBehaviour {
 				Action(colli.transform);
 				GameManager.Instance.BonusSpawned = false;
 				GameManager.Instance.resetBonusTimer();
-				Debug.Log(GetType());
+				//Debug.Log(GetType());
 				Destroy(this.gameObject, timeActive + 0.5f);
 				GetComponent<Renderer>().enabled = false;
 				GetComponent<Collider>().enabled = false;
